@@ -1,0 +1,159 @@
+using namespace std;
+#include<iostream>
+#include<string.h>
+const int n=5;
+struct student
+{ 
+char name[10];
+int rno;
+float sgpa;
+};
+void accept(struct student list[n]);
+void display(struct student list[80]);
+void bubble(struct student list[n]);
+void insertion(struct student list[n]);
+void search(struct student list[n]);
+void quicksort(struct student list[n], int , int );
+void displayquick(struct student list[50]);
+void binarys(struct student list[n]);
+
+
+int main()
+{ int ch, i;
+ struct student data[20];
+ accept(data);
+ cout<<"\n 1. Bubble sort";
+ cout<<"\n 2. Insertion sort";
+ cout<<"\n 3. Quick sort";
+ cout<<"\n 4. search";
+ cout<<"\n 5. binary search";
+ cout<<"\n 6. Exit";
+ do
+ { cout<<"\n select your choice";
+   cin>>ch;
+  switch(ch)
+{ case 1 : bubble(data);
+           display(data);
+           break;
+  case 2 : insertion(data);
+           display(data);
+           break;
+  case 3:  quicksort(data,0,n-1);
+           displayquick(data);
+           break;         
+  case 4 : search(data);
+           break;
+  case 5 : binarys(data);
+           break;
+  case 6:  cout<<"Exit\n";
+           break;
+default : cout<<"invalid choice";
+} }
+while(ch != 4);
+return 0;
+}
+ void accept( struct student list[n])
+  { int i;
+    for(i=0;i<n;i++)
+      { cout<<"enter name, rollno and SGPA";
+        cin>>list[i].name>>list[i].rno>>list[i].sgpa;
+       }
+  }
+
+void display(struct student list[80])
+{ int i;
+  cout<<"\n\nname\tRollno\tsgpa\n";
+  for(i=0;i<n;i++)
+   { cout<<"\n"<<list[i].name<<"\t"<<list[i].rno<<"\t"<<list[i].sgpa;
+     }
+}
+void displayquick(struct student list[50])
+ { int i;
+   cout<<"\n\nName\tRollno\tsgpa\n";
+   for(i=0;i<10;i++)
+    {cout<<"\n"<<list[i].name<<"\t"<<list[i].rno<<"\t"<<list[i].sgpa;
+    }
+  }
+void bubble(struct student list[n])
+{ int i,j;
+  struct student temp;
+  for(i=0;i<n-1;i++)
+   { for(j=0;j<n-1-i;j++)
+      { if(list[j].rno>list[j+1].rno)
+         {temp=list[j];
+          list[j]=list[j+1];
+          list[j+1]=temp;
+       }}}}
+void insertion(struct student list[n])
+ {
+   int k,j;
+struct student temp;
+for(k=1;k<n;k++)
+ { temp=list[k];
+    j=k-1;
+while(strcmp(list[j].name, temp.name)>0 &&j>=0)
+ {list[j+1]=list[j];
+   --j;
+  } list[j+1]=temp;
+}}
+void quicksort(struct student list[n], int first, int last)
+{ int pivot,i,j;
+  struct student temp;
+  if(first<last)
+  { pivot=first;
+    i=first;
+    j=last;
+  while(i<j)
+   { while(list[i].sgpa>=list[pivot].sgpa && i<last)
+     i++;
+     while(list[j].sgpa<list[pivot].sgpa) 
+     j--;
+  if(i<j)
+   { temp=list[i];
+    list[i]=list[j];
+    list[j]=temp;
+   }
+  }
+temp=list[pivot];
+list[pivot]=list[j];
+list[j]=temp;
+quicksort(list,first,j-1);
+quicksort(list,j+1,last);
+ }
+}
+
+void search(struct student list[n])
+{ float sgpa;
+  int i;
+cout<<"enter sgpa";
+cin>>sgpa;
+cout<<"\n name \t  Rollno  \t sgpa\n";
+for(i=0;i<n;i++)
+ { if(sgpa==list[i].sgpa)
+     { cout<<list[i].name<<"\t"<<list[i].rno<<"\t"<<list[i].sgpa;
+     }
+}
+}
+void binarys(struct student list[n]) 
+{ 
+  char search[50]; 
+  int k,lower,upper,mid;
+cout<<"enter name of the student you want to search";
+cin>>search;
+lower=0;
+upper=n-1;
+mid=(lower+upper)/2;
+while(lower<=upper)
+    { if(strcmp(list[mid].name,search)<0)
+      lower=mid+1;
+      else if(strcmp(list[mid].name,search)==0) 
+      { cout<<"\n"<<list[mid].name<<"\t"<<list[mid].rno<<"\t"<<list[mid].sgpa;
+        break;
+      }
+     else
+      upper=mid-1;
+      mid=(lower+upper)/2;
+    }
+if(lower>=upper)
+cout<<search<<"is not found in the list";
+}
